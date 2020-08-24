@@ -1,0 +1,23 @@
+<header>
+	<div id="{{name}}">
+		""
+	</div>
+	<div id="{{name}}">
+		""
+	</div>
+	<div id="{{name}}" >
+		"{{ddd}}"
+	</div>
+</header>
+
+
+template.js 是一个非常简单并且性能强劲的模板引擎， ops大约在每秒500万左右， 非常快速。无论是node还是在浏览器侧都可以使用。可以作为前后端渲染一致的模块， 可用于首屏渲染+客户端动态渲染。
+
+
+## hello World示例 ##
+    var template = require("./template.js").template;
+    var helloPtr = template.compile("{{name}}, welcome!");
+    console.log(helloPtr({ name : "agent.zy" }));
+	//// agent.zy, welcome!
+
+
