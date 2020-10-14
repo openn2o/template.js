@@ -2,6 +2,120 @@
 可在node和浏览器端使用。
 
 ## node批量编译示例 ##
+    -------------
+    m1.html 模板文件
+    {#
+       m1 hbox 横向滚动抽屉
+    #}
+
+    <div class="heading">
+        <div class="title" style="padding:0.5rem;"><h3>{*data.name*}</h3></div>
+        <nav class="nav">
+            <a><i class="icon icon-sort-by-attributes-alt"></i></a>
+        </nav>
+    </div>
+
+    {%foreach v in data.data do%}
+    <a class="item with-avatar multi-lines" data-item="{*v.book_id*}">
+        <div class="avatar rounded yellow" style="pointer-events:none;width:3.6rem;height:4.5rem">
+            <img src="res/{*v.book_id*}/icon.jpg">
+        </div>
+        <div class="content" style="pointer-events:none;">
+            <div class="title" style="color:#000;pointer-events:none; font-bold:100; padding-left:5px; font-size:0.7rem">{*v.name*}</div>
+            <div class="subtitle" style="padding-left:5px;pointer-events:none; font-size:0.6rem;line-height:0.8rem;">
+            {%if (v.keyword.length>50) do%}
+                {*v.keyword.substring(0,50)*} ...
+            {%else%}
+                {*v.keyword*}
+            {%end%}<br>
+                <span>{*v.author*} | {*v.book_type*} | {*v.status*}</span>
+            </div>
+        </div>
+    </a>
+    {%end%}
+    m3.html 模板
+    {#
+       m3有图标也有简介的模块视图
+    #}
+
+    <div class="heading">
+        <div class="title" style="padding:0.5rem;"><h3>{*data.name*}</h3></div>
+        <nav class="nav">
+            <a><i class="icon icon-sort-by-attributes-alt"></i></a>
+        </nav>
+    </div>
+
+    {%foreach v in data.data do%}
+    <a class="item with-avatar multi-lines" data-item="{*v.book_id*}">
+        <div class="avatar rounded yellow" style="pointer-events:none;width:3.6rem;height:4.5rem">
+            <img src="res/{*v.book_id*}/icon.jpg">
+        </div>
+        <div class="content" style="pointer-events:none;">
+            <div class="title" style="color:#000;pointer-events:none; font-bold:100; padding-left:5px; font-size:0.7rem">{*v.name*}</div>
+            <div class="subtitle" style="padding-left:5px;pointer-events:none; font-size:0.6rem;line-height:0.8rem;">
+            {%if (v.keyword.length>50) do%}
+                {*v.keyword.substring(0,50)*} ...
+            {%else%}
+                {*v.keyword*}
+            {%end%}<br>
+                <span>{*v.author*} | {*v.book_type*} | {*v.status*}</span>
+            </div>
+        </div>
+    </a>
+    {%end%}
+    
+    m4.html 模板文件
+    {#
+       m4是首元素权限其余元素只显示图标
+    #}
+
+    <div class="heading">
+        <div class="title" style="padding:0.5rem;"><h3>{*data.name*}</h3></div>
+        <nav class="nav">
+            <a><i class="icon icon-sort-by-attributes-alt"></i></a>
+        </nav>
+    </div>
+    {%header = true;%}
+    {%foreach v in data.data do%}
+
+    {%if (header==true) do%}
+    <a class="item with-avatar multi-lines" data-item="{*v.book_id*}">
+        <div class="avatar rounded yellow" style="pointer-events:none;width:3.6rem;height:4.5rem">
+            <img src="res/{*v.book_id*}/icon.jpg">
+        </div>
+        <div class="content" style="pointer-events:none;">
+            <div class="title" style="color:#000;pointer-events:none; font-bold:100; padding-left:5px; font-size:0.7rem">{*v.name*}</div>
+            <div class="subtitle" style="padding-left:5px;pointer-events:none; font-size:0.6rem;line-height:0.8rem;">
+            {%if (v.keyword.length>50) do%}
+                {*v.keyword.substring(0,50)*} ...
+            {%else%}
+                {*v.keyword*}
+            {%end%}<br>
+                <span>{*v.author*} | {*v.book_type*} | {*v.status*}</span>
+            </div>
+        </div>
+    </a>
+    {%header = false%}
+    <div class="row">
+    {%else%}
+        <div class="cell-3" style="padding:.7rem ;">
+            <a class="item with-avatar multi-lines" data-item="{*v.book_id*}">
+                <div class="avatar rounded yellow" style="pointer-events:none;width:3.6rem;height:4.5rem">
+                    <img src="res/{*v.book_id*}/icon.jpg">
+                </div>
+                <div class="content" style="pointer-events:none;">
+                    <div class="subtitle" style="font-size:0.6rem;line-height:0.8rem; padding-top:0.5rem;">{*v.name*}</div>
+                </div>
+            </a>
+        </div>
+
+    {%end%} 
+    {%end%}
+
+    </div>
+    -------------
+    
+    //生成一个二进制的模板代码压缩文件
     var template = require("./template.js").template;
     template.info();
     var a = template.precompile("./" , "a.out");
