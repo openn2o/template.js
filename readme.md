@@ -188,14 +188,18 @@ if 语句
     
     var template = require("./template.js").template;
     template.info();
-    var tml5 = "{%\
-    	 if (data['k1']==1) do\
-    %}"
-    var tml6 = "11111111{%else%}22222";
-    var tml7 = "{%end%}"
-    console.log( tml5 + tml6 + tml7 );
-    var a = template.compile(tml5 + tml6 + tml7 , 2);
-    console.log("result:",a({"k1":2,"k2":"v2"}));
+    var str = `
+    {% if (data['k1']==1) do %}
+    		value eq 1 out
+    {%else%}
+    		value neq 1 out
+    {%end%}
+    `
+    
+    console.log( "tml=" , str );
+    var a = template.compile(str , 2);
+    console.log("===============");
+    console.log("result:", a({"k1":2,"k2":"v2"}));
 
 
 for each
@@ -203,14 +207,14 @@ for each
     var template = require("./template.js").template;
     template.info();
     
+    var str = `
+    	{%foreach v in data do%}
+    		{*v*} {%EOL%}
+    	{%end%}
+    `
     
-    var tml8 = "{%\
-    	 foreach v in data do\
-    %}"
-    var tml9 = " {*v*} {%EOL%}";
-    var tml10 = "{%end%}"
     
-    var a = template.compile(tml8 + tml9 + tml10 , 3);
+    var a = template.compile(str , 3);
     console.log("result:",a({"k1":"v1","k2":"v2"}));
 
 
@@ -219,16 +223,17 @@ for in
     var template = require("./template.js").template;
     template.info();
     
+    var str = `
+    	{%for d in data do%}
+    		key 是{*d*} 并且元素是 {*data[d]*} 换行 {%EOL%}
+    	{%end%}
+    `
     
-    var tml5 = "{%\
-    	 for d in data do\
-    %}"
-    var tml6 = "zxczxczx {*d*} ={*data[d]*} asdasdas {%EOL%}";
-    var tml7 = "{%end%}"
-    console.log( tml5 + tml6 + tml7 );
-    var a = template.compile(tml5 + tml6 + tml7 , 2);
-    console.log("result:",a({"k1":"v1","k2":"v2"}));
-
+    console.log( str );
+    var a = template.compile(str , 2);
+    console.log("result:",a({"k1":"frist","k2":"second"}));
+    
+    
 ipairs 语法
     
     var template = require("./template.js").template;
